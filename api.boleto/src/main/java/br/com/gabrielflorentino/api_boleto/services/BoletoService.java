@@ -18,7 +18,7 @@ public class BoletoService {
         this.boletoRepository = boletoRepository;
     }
 
-    public BoletoDTO salvar(String codigoBarras, BoletoRepository boletoRepository) {
+    public BoletoDTO salvar(String codigoBarras) {
         var boletoOptional = boletoRepository.findByCodigoBarras(codigoBarras);
         if (boletoOptional.isPresent()) {
             // lançar uma exeption
@@ -36,4 +36,5 @@ public class BoletoService {
 
         return BoletoMapper.toDTO(boletoEntity);
     }
+
 }
