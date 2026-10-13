@@ -1,5 +1,6 @@
 package br.com.gabrielflorentino.api_boleto.services;
 
+import br.com.gabrielflorentino.api_boleto.controller.exception.ApplicationException;
 import br.com.gabrielflorentino.api_boleto.dto.BoletoDTO;
 import br.com.gabrielflorentino.api_boleto.entity.BoletoEntity;
 import br.com.gabrielflorentino.api_boleto.entity.enums.SituacaoBoleto;
@@ -22,7 +23,7 @@ public class BoletoService {
         var boletoOptional = boletoRepository.findByCodigoBarras(codigoBarras);
         if (boletoOptional.isPresent()) {
             // lançar uma exeption
-            throw new RuntimeException("Já existe uma solicitação de pagamento para esse boleto");
+            throw new ApplicationException("Já existe uma solicitação de pagamento para esse boleto");
         }
 
         var boletoEntity = BoletoEntity.builder()
