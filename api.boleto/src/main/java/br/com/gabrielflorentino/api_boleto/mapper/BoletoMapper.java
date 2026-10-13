@@ -7,7 +7,7 @@ public class BoletoMapper {
 
     public static BoletoDTO toDTO(BoletoEntity boleto) {
         return BoletoDTO.builder()
-                .codigoBarra(boleto.getCodigoBarra())
+                .codigoBarra(boleto.getCodigoBarras())
                 .situacaoBoleto(boleto.getSituacaoBoleto())
                 .dataCriacao(boleto.getDataCriacao())
                 .dataAtualizacao(boleto.getDataAtualizacao())

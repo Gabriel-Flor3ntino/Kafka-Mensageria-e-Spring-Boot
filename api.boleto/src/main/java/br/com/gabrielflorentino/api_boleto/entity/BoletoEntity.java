@@ -19,7 +19,7 @@ public class BoletoEntity {
     private Long id;
 
     @Column(name = "codigo_barra")
-    private String codigoBarra;
+    private String codigoBarras;
 
     @Column(name = "situacao_boleto")
     private SituacaoBoleto situacaoBoleto;

@@ -26,7 +26,7 @@ public class BoletoService {
         }
 
         var boletoEntity = BoletoEntity.builder()
-                .codigoBarra(codigoBarras)
+                .codigoBarras(codigoBarras)
                 .situacaoBoleto(SituacaoBoleto.INICIALIZADO)
                 .dataCriacao(LocalDateTime.now())
                 .dataAtualizacao(LocalDateTime.now())
