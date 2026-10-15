@@ -36,10 +36,10 @@ public class BoletoService {
                 .dataAtualizacao(LocalDateTime.now())
                 .build();
 
-        var boletoDTO = BoletoMapper.toDTO(boletoEntity);
+
         boletoRepository.save(boletoEntity);
-        boletoProducer.enviarMensagem(boletoDTO);
-        return boletoDTO;
+        boletoProducer.enviarMensagem(BoletoMapper.toAvro(boletoEntity));
+        return BoletoMapper.toDTO(boletoEntity);
     }
 
 }
