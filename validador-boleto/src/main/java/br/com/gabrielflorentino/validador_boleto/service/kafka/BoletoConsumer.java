@@ -10,10 +10,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class BoletoConsumer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BoletoConsumer.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(BoletoConsumer.class);
 
-    @KafkaListener(topics = "%{spring.kafka.topico-boleto=}", groupId = "spring.kafka.consumer.group-id")
-    public void consomeBoleto(@Payload Boleto boleto) {
-        LOGGER.info(String.format("Consumindo mensagem -> %s", boleto));
+    @KafkaListener(
+            topics = "${spring.kafka.topico-boleto}",
+            groupId = "${spring.kafka.consumer.group-id}"
+    )
+    public void consomeBoleto(@Payload Boleto boleto) throws InterruptedException {
+        LOGGER.info("Consumindo mensagem -> {}", boleto);
+        Thread.sleep(3000);
     }
 }
