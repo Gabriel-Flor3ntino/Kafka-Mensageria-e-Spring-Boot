@@ -1,6 +1,6 @@
 {
     "type": "record",
-    "namespace": "br.com.gabrielflorentino",
+    "namespace": "br.com.gabrielflorentino.avro",
     "name": "Boleto",
     "fields": [
         {

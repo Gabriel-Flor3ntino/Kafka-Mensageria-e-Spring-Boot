@@ -1,6 +1,6 @@
 package br.com.gabrielflorentino.api_boleto.services.kafka;
 
-import br.com.gabrielflorentino.Boleto;
+import br.com.gabrielflorentino.avro.Boleto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
