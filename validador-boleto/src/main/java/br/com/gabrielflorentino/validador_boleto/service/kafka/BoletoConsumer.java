@@ -1,6 +1,8 @@
 package br.com.gabrielflorentino.validador_boleto.service.kafka;
 
 import br.com.gabrielflorentino.avro.Boleto;
+import br.com.gabrielflorentino.validador_boleto.mapper.BoletoMapper;
+import br.com.gabrielflorentino.validador_boleto.service.ValidarBoletoService;
 import org.apache.kafka.clients.consumer.internals.AcknowledgementBatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +19,19 @@ public class BoletoConsumer {
     private static final Logger LOGGER =
             LoggerFactory.getLogger(BoletoConsumer.class);
 
+    private final ValidarBoletoService validarBoletoService;
+
+    public BoletoConsumer(ValidarBoletoService validarBoletoService) {
+        this.validarBoletoService = validarBoletoService;
+    }
+
     @KafkaListener(
             topics = "${spring.kafka.topico-boleto}",
             groupId = "${spring.kafka.consumer.group-id}"
     )
     public void consomeBoleto(@Payload Boleto boleto, Acknowledgment ack)  {
         LOGGER.info("Consumindo mensagem -> {}", boleto);
+        validarBoletoService.validar(BoletoMapper.toEntity(boleto));
         ack.acknowledge();
     }
 
