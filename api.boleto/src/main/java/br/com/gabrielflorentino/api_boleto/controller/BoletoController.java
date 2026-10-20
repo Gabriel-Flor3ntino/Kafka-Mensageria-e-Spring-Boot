@@ -18,6 +18,12 @@ public class BoletoController {
         this.boletoService = boletoService;
     }
 
+    @GetMapping("/{codigoBarras}")
+    public ResponseEntity<BoletoDTO> buscarBoletoCodigoBarras(@PathVariable("codigoBarras") String codigoBarras) {
+        var boletoDTO = boletoService.buscarBoletoPorCodigoBarras(codigoBarras);
+        return ResponseEntity.ok(boletoDTO);
+    }
+
     @PostMapping
     public ResponseEntity<BoletoDTO> salvar(@Valid @RequestBody BoletoRequestDTO boletoRequestDTO) {
         var boleto = boletoService.salvar(boletoRequestDTO.getCodigoBarras());

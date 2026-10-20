@@ -1,6 +1,7 @@
 package br.com.gabrielflorentino.api_boleto.services;
 
 import br.com.gabrielflorentino.api_boleto.controller.exception.ApplicationException;
+import br.com.gabrielflorentino.api_boleto.controller.exception.NotFoundException;
 import br.com.gabrielflorentino.api_boleto.dto.BoletoDTO;
 import br.com.gabrielflorentino.api_boleto.entity.BoletoEntity;
 import br.com.gabrielflorentino.api_boleto.entity.enums.SituacaoBoleto;
@@ -40,6 +41,23 @@ public class BoletoService {
         boletoRepository.save(boletoEntity);
         boletoProducer.enviarMensagem(BoletoMapper.toAvro(boletoEntity));
         return BoletoMapper.toDTO(boletoEntity);
+    }
+
+    public BoletoDTO buscarBoletoPorCodigoBarras(String codigoBarras) {
+        return BoletoMapper.toDTO(recuperaBoleto((codigoBarras)));
+    }
+
+    private BoletoEntity recuperaBoleto(String codigoBarras) {
+        return boletoRepository.findByCodigoBarras(codigoBarras).
+                orElseThrow(() -> new NotFoundException("Boleto não encontrado"));
+    }
+
+    public void atualizar(BoletoEntity boleto) {
+        var boletoAtual = recuperaBoleto(boleto.getCodigoBarras());
+
+        boletoAtual.setSituacaoBoleto(boleto.getSituacaoBoleto());
+        boletoAtual.setDataAtualizacao(LocalDateTime.now());
+        boletoRepository.save(boletoAtual);
     }
 
 }

@@ -13,6 +13,17 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<Object> applicationException(ApplicationException e, WebRequest request) {
+        var response = ErroResponse.builder()
+                .erro(e.getMessage())
+                .codigo(HttpStatus.BAD_REQUEST.value())
+                .timestamp(new Date())
+                .path(request.getDescription(false))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException e, WebRequest request) {
         var erros = e.getFieldErrors()
@@ -28,4 +39,16 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Object> notFoundException(NotFoundException e, WebRequest request) {
+        var response = ErroResponse.builder()
+                .erro(e.getMessage())
+                .codigo(HttpStatus.NOT_FOUND.value())
+                .timestamp(new Date())
+                .path(request.getDescription(false))
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
 }
